@@ -1,0 +1,9 @@
+sample:
+  description: Build and substitute OpenThread library.
+  name: OpenThread Libraries sample
+tests:
+  samples.openthread.lib:
+    build_only: true
+    build_on_all: true
+    tags: openthread lib
+    platform_whitelist: nrf52840dk_nrf52840 nrf52833dk_nrf52833

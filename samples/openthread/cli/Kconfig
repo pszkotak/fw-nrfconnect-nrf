@@ -4,6 +4,30 @@
 # SPDX-License-Identifier: LicenseRef-BSD-5-Clause-Nordic
 #
 
+# OPENTHREAD_IMPLEMENTATION is declared in multiple places.
+# Note that the dependencies of the original config
+# must be duplicated to not affect it's visibility.
+
+if NET_L2_OPENTHREAD
+
+choice OPENTHREAD_IMPLEMENTATION
+	prompt "OpenThread Selection"
+	default OPENTHREAD_SOURCES
+	help
+	  Select OpenThread to use for build. Custom OpenThread implementations
+	  can be added to the application Kconfig.
+
+endchoice
+
+config OPENTHREAD_LIBRARIES_SUBSTITUTE
+	bool "Substitute OpenThread Libraries"
+        depends on OPENTHREAD_SOURCES
+        default n
+	help
+	  OpenThread libraries build from source will replace those provided by the nrfxlib.
+
+endif
+
 menu "Zephyr Kernel"
 source "Kconfig.zephyr"
 endmenu

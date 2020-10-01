@@ -367,12 +367,19 @@ Updating pre-built OpenThread libraries
 You can update nrfxlib's :ref:`nrfxlib:ot_libs` when using any Thread sample if you configure the sample to build OpenThread stack from source with :option:`CONFIG_OPENTHREAD_SOURCES`.
 Use this functionality for example for :ref:`certification <ug_thread_cert>` of your configuration of OpenThread libraries.
 
-After a sample is built, run the following command to overwrite the nrfxlib libraries to your latest version:
+Run the following command to overwrite the nrfxlib libraries to your latest debug version:
 
 .. parsed-literal::
    :class: highlight
 
    west build -t install_openthread_libraries
+
+To install the release version, that does not contain debug symbols, strip the OpenThread libraries before installation:
+
+.. parsed-literal::
+   :class: highlight
+
+   west build -t strip_openthread_libraries
 
 .. note::
     The libraries destination directory can differ.

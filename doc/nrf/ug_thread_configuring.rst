@@ -367,23 +367,42 @@ Updating pre-built OpenThread libraries
 You can update nrfxlib's :ref:`nrfxlib:ot_libs` when using any Thread sample if you configure the sample to build OpenThread stack from source with :option:`CONFIG_OPENTHREAD_SOURCES`.
 Use this functionality for example for :ref:`certification <ug_thread_cert>` of your configuration of OpenThread libraries.
 
-Run the following command to overwrite the nrfxlib libraries to your latest debug version:
-
-.. parsed-literal::
-   :class: highlight
-
-   west build -t install_openthread_libraries
-
-To install the release version, that does not contain debug symbols, strip the OpenThread libraries before installation:
-
-.. parsed-literal::
-   :class: highlight
-
-   west build -t strip_openthread_libraries
-
 .. note::
     The libraries destination directory can differ.
     When you selected :option:`CONFIG_OPENTHREAD_USER_CUSTOM_LIBRARY`, the location depends the chosen :ref:`nrf_security backend <nrfxlib:nrf_security_readme>`, either :option:`CONFIG_CC310_BACKEND` or :option:`CONFIG_OBERON_BACKEND`.
+
+Updating libraries without debug symbols
+----------------------------------------
+
+You can also install the release version of the latest nrfxlib libraries without the debug symbols to save a lot of memory space.
+This is handled with the :option:`CONFIG_OPENTHREAD_STRIP_LIBRARIES_BEFORE_INSTALL` Kconfig option.
+This option is enabled by default.
+
+Run the following command to update the nrfxlib libraries:
+
+.. parsed-literal::
+   :class: highlight
+
+   west build -b nrf52840dk_nrf52840 -t install_openthread_libraries
+
+|board_note_for_updating_libs|
+
+Updating libraries to debug version
+-----------------------------------
+
+You can install the debug version of the current OpenThread libraries (from Zephyr).
+This can be useful when debugging, but will take a significant amount of memory space.
+For this purpose, you must disable the :option:`CONFIG_OPENTHREAD_STRIP_LIBRARIES_BEFORE_INSTALL` Kconfig option when building the sample.
+
+To update the nrfxlib libraries with debug symbols, run the following command:
+
+.. parsed-literal::
+   :class: highlight
+
+   west build -b nrf52840dk_nrf52840 -t install_openthread_libraries -- -DCONFIG_OPENTHREAD_STRIP_LIBRARIES_BEFORE_INSTALL=n
+
+|board_note_for_updating_libs|
+The :option:`CONFIG_OPENTHREAD_STRIP_LIBRARIES_BEFORE_INSTALL` Kconfig option will be enabled again after this command completes.
 
 UART recommendations for NCP
 ****************************
@@ -424,3 +443,6 @@ The following UART signals are used in the Nordic solution:
 * RTS
 * DTS (optional, not used)
 * RES
+
+.. |board_note_for_updating_libs| replace:: This command also builds the sample on the specified board.
+   Make sure that the board you mention is compatible with the chosen sample.

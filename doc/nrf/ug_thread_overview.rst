@@ -22,6 +22,7 @@ For more information about some aspects of Thread, see the following pages:
 
    ug_thread_architectures.rst
    ug_thread_ot_integration.rst
+   ug_thread_ot_memory.rst
    ug_thread_commissioning.rst
 
 You can also find more at `OpenThread.io`_ and `Thread Group`_ pages.
